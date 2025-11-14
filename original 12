@@ -1,0 +1,58 @@
+//elimina duplicados
+#include <iostream>
+#include <vector>
+#include <limits>
+using namespace std;
+vector<double> eliminarDuplicados(const vector<double>& datos);
+
+int main() {
+    int tam;
+    double val_ing;
+    vector<double> num;
+cout << "Eliminacion de Numeros Duplicados en Vector" << endl;
+    cout << "Cuantos datos va a tener su vector?" << endl;
+    if (!(cin >> tam) || tam <= 0) {
+        cerr << "Debe ser un num positivooo." << endl;
+        return 1;}
+
+cout << "ingrese los " << tam << " num(enteros o reales):" << endl;
+    for (int i = 0; i < tam; ++i) {
+        cout << "num" << i + 1 << "/" << tam << ":";
+        if (!(cin >> val_ing)) {
+            cerr << "Error: Entrada no valida en el numero " << i + 1 << ". Saliendo..." << endl;
+            return 1;
+        }
+        num.push_back(val_ing);
+    }
+
+vector<double> num_unico = eliminarDuplicados(num);
+
+cout << "Vector Original: " << num.size() << " elementos." << endl;
+cout << "Vector Sin Duplicados: " << num_unico.size() << " elementos." << endl;
+
+cout << "Elementos Unicos: ["; //show vector sin dupli
+    for (size_t i = 0; i < num_unico.size(); ++i) {
+        cout << num_unico[i];
+        if (i < num_unico.size() - 1) {
+            cout << ", ";
+        }
+    }
+    cout << "]" << endl;
+return 0;}
+
+vector<double> eliminarDuplicados(const vector<double>& datos) { //datos:vect orig
+vector<double> resultado_unico; //nuevo vector (no duplicados)
+for (double elemento_original : datos) { //nelem=>nveces
+bool es_duplicado = false;
+for (double elemento_unico : resultado_unico) {
+if (elemento_original == elemento_unico) { 
+                es_duplicado = true;
+break;}
+}
+if (es_duplicado == false) {
+            resultado_unico.push_back(elemento_original);
+        }
+    }
+
+    return resultado_unico;
+}
