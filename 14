@@ -1,0 +1,62 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+template <typename T>
+void intercambio(T &a, T &b);
+void ordenarVector(vector<double>& datos);
+void mostrarVector(const vector<double>& datos);
+int main() {
+    int tam;
+cout << "Ingrese la cantidad de numeros que va a ordenar: ";
+    if (!(cin >> tam) || tam <= 0) {
+        cerr << "Error: debe ser un numero entero positivo." << endl;
+        return 1;
+    }
+vector<double> numeros(tam);
+cout << "\nIngrese los " << tam<< " numeros (enteros o reales):" << endl;
+for (int i = 0; i < tam; ++i) {
+        cout<< i + 1 << ": ";
+if (!(cin >> numeros[i])) {
+            cerr << "Error: Entrada no valida. Saliendo..." << endl;
+            return 1;}
+}
+cout << "\nVector Original: "; //muestra en vector original
+    mostrarVector(numeros);
+    ordenarVector(numeros);
+cout << "Vector Ordenado: ";
+    mostrarVector(numeros);
+return 0;
+}
+
+
+template <typename T>
+void intercambio(T &a, T &b) {
+    T temporal = a;
+    a = b;
+    b = temporal;
+}
+void ordenarVector(vector<double>& datos) {
+    int n = datos.size();
+   for (int i = 0; i < n - 1; ++i) { //bucle externo pasadas
+        for (int j = 0; j < n - 1 - i; ++j) { //bucle interno elementos
+            if (datos[j] > datos[j + 1]) {  //si mayor intercambia
+                intercambio(datos[j], datos[j + 1]); 
+            }
+        }
+    }
+}
+void mostrarVector(const vector<double>& datos) {
+    cout << "[ ";
+    for (size_t i = 0; i < datos.size(); ++i) {
+        cout << datos[i];
+        if (i < datos.size() - 1) {
+            cout << ", ";
+        }
+    }
+    cout << " ]" << endl;
+}
+
+
+
+        }
+    }
