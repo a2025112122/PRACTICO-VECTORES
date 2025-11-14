@@ -1,0 +1,45 @@
+//min ingresadooo
+#include <iostream>
+#include <vector>
+#include <limits>
+
+using namespace std;
+
+double encontmin(const vector<double>& datos);
+
+int main(){
+int tam;
+double val_ing;
+vector<double> num;
+
+cout<< "cuantos datos va a tener su vector?" << endl;
+if(!(cin>> tam) || tam<=0){
+cerr<<" debe ser un num positivooo." << endl;
+return 1;
+}
+cout<< "ingrese los "<< tam<<" num(enteros o reales):"<< endl;
+for(int i=0; i<tam; ++i){
+cout << "numero"<<i+1<<"/"<<tam<<":";
+if (!(cin >> val_ing)) {
+            cerr << "Error: Entrada no valida en el numero " << i + 1 << ". Saliendo..." << endl;
+            return 1;
+        }
+    num.push_back(val_ing); //lista compras 
+        }
+double minimo=encontmin(num);
+    cout << "El total de numeros ingresados es: " << num.size() << endl;
+    cout << "El ** minimo** ingresado es: " << minimo << endl;
+  return 0;
+  }
+
+
+double encontmin(const vector<double>& datos){
+double minimo= datos[0];             //4
+for(size_t i=1; i < datos.size(); i++){ //size t:entero sin sig find elem, --.size
+
+if (datos[i]<minimo){               // 5<4
+minimo = datos[i];
+}
+}
+return minimo;
+}
