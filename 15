@@ -1,0 +1,98 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+template<typename T>
+void Intercambio(T &a, T &b) {
+    T temporal = a;
+    a = b;
+    b = temporal;
+}
+
+
+void leerDatosAlumnos(vector<string>& alumnos, vector<double>& notas);
+void clasificarNotasDescendente(vector<string>& alumnos, vector<double>& notas);
+void imprimirTopN(const vector<string>& alumnos, const vector<double>& notas, int n);
+
+int main(){
+    vector<string> alumnos;
+    vector<double> notas;
+
+
+    leerDatosAlumnos(alumnos, notas);
+    
+    if (alumnos.empty()) {
+        cout << "No se ingresaron datos. Finalizando." << endl;
+        return 0;
+    }
+    
+  
+    clasificarNotasDescendente(alumnos, notas);
+    imprimirTopN(alumnos, notas, 3);
+    
+    return 0;
+}
+
+
+void leerDatosAlumnos(vector<string>& alumnos, vector<double>& notas) {
+    int tam;
+    cout << "Ingrese la cantidad de alumnos: ";
+    if (!(cin >> tam) || tam <= 0) {
+        cerr << "El tamanio debe ser un numero positivo." << endl;
+        return;
+    }
+    for (int i = 0; i < tam; ++i) {
+        string nombre;
+        double nota;
+        
+        cout << "\nAlumno " << i + 1 << "/" << tam << ".\n";
+        cout << "Ingrese nombre: ";
+        cin >> nombre; 
+        
+        cout << "Ingrese nota: ";
+        if (!(cin >> nota)) {
+            cerr << "Error en la entrada de nota. Terminando ingreso." << endl;
+            cin.clear(); 
+            return;
+        }
+        alumnos.push_back(nombre);
+        notas.push_back(nota);
+    }
+}
+
+void clasificarNotasDescendente(vector<string>& alumnos, vector<double>& notas) {
+    int n = notas.size();
+    
+    for (int i = 0; i < n - 1; ++i) { 
+        for (int j = 0; j < n - i - 1; ++j) {
+            
+            if (notas[j] < notas[j + 1]) {
+                Intercambio(notas[j], notas[j + 1]);
+                Intercambio(alumnos[j], alumnos[j + 1]);
+            }
+        }
+    }
+}
+
+void imprimirTopN(const vector<string>& alumnos, const vector<double>& notas, int n) {
+    cout << "\nTop " << n << " Mejores Notas ---" << endl;
+    int limite;
+    
+    if ((int)alumnos.size() < n) {
+        limite = (int)alumnos.size();
+    } else {
+        limite = n;
+    }
+    
+    if (limite == 0) {
+        cout << "No hay datos para mostrar." << endl;
+        return;
+    }
+
+    for (int i = 0; i < limite; ++i) {
+        cout << i + 1 << ". " << alumnos[i] << " - Nota: " << notas[i] << endl;
+    }
+}
+
