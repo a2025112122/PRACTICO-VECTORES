@@ -1,1 +1,48 @@
-jdjdijc
+//capicua
+#include<iostream>
+#include<vector>
+using namespace std;
+bool esCapicua(const vector<double>& datos);
+int main(){
+int tam;
+double valorIngresado;
+vector<double> num;
+cout << "Ingrese la cantidad de numeros que contendra el vector: ";
+    if (!(cin >> tam) || tam <= 0) {
+        cerr << "Error: El tam debe ser un numero entero positivo." << endl;
+        return 1;
+    }
+cout << "\nAhora ingrese los " << tam << " numeros (enteros o reales):" << endl;
+    
+    for (int i = 0; i < tam; ++i) {
+        cout << "Numero " << i + 1 << "/" << tam << ": ";
+        
+        if (!(cin >> valorIngresado)) {
+            cerr << "Error: Entrada no valida en el numero "  << endl;
+            return 1;
+        }
+num.push_back(valorIngresado);
+    }
+if (esCapicua(num)) {
+        cout << "El vector ingresado **ES CAPICUA**." << endl;
+    } else {
+        cout << "El vector ingresado **NO ES CAPICUA**." << endl;
+    }
+
+    return 0;
+}
+bool esCapicua (const vector<double>&datos){
+if(datos.size()<=1){
+return true;
+}
+size_t i=0;
+size_t j= datos.size()-1;
+while (i < j) {
+if (datos[i] != datos[j]) {
+return false;
+        }
+i++;
+j--;
+}
+return true;
+}
