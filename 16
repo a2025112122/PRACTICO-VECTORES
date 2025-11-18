@@ -6,19 +6,22 @@
 
 using namespace std;
 
+struct Alumno {     //cree una estructura para que el nombre y la nota esten dentro de un vector
+       string nombre;
+       double nota;}
+
 template<typename T>
 void Intercambio(T &a, T &b);
 
 void mostrarMenu();
-void leerDatosAlumnos(vector<string>& alumnos, vector<double>& notas);
-void listarAlumnosYNotas(const vector<string>& alumnos, const vector<double>& notas);
-void ordenarAlfabeticamente(vector<string>& alumnos, vector<double>& notas); //ordenar como el 14
-void sacarMejorNota(const vector<string>& alumnos, const vector<double>& notas);
-void sacarPromedioDeNotas(const vector<double>& notas);
+void leerDatosAlumnos(vector<Alumno>&lista_clase);
+void listarAlumnosYNotas(const vector<Alumno>&lista_clase);
+void ordenarAlfabeticamente(vector<Alumno>&lista_clase); //ordenar como el 14
+void sacarMejorNota(const vector<Alumno>&lista_clase);
+void sacarPromedioDeNotas(const vector<Alumno>&lista_clase);
 
 int main() {
-    vector<string> alumnos;
-    vector<double> notas;
+    vector<Alumno>lista_clase;
     int opcion;
 
     do {
@@ -28,25 +31,25 @@ int main() {
         if (!(cin >> opcion)) {
             cout << "\nError de entrada. Intente de nuevo." << endl;
             cin.clear(); // Limpia la bandera de error
-            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Descarta la entrada restante
+//no me convence mucho            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Descarta la entrada restante
             continue;
         }
 
         switch (opcion) {
             case 1:
-                ingresarAlumnoYNota(alumnos, notas);
+                leerDatosAlumnos(lista_clase);
                 break;
             case 2:
-                listarAlumnosYNotas(alumnos, notas);
+                listarAlumnosYNotas(lista_clase);
                 break;
             case 3:
-                ordenarAlfabeticamente(alumnos, notas);
+                ordenarAlfabeticamente(lista_clase);
                 break;
             case 4:
-                sacarMejorNota(alumnos, notas);
+                sacarMejorNota(lista_clase);
                 break;
             case 5:
-                sacarPromedioDeNotas(notas);
+                sacarPromedioDeNotas(lista_clase);
                 break;
             case 0:
                 cout << "Saliendo del programa. ¡Hasta luego!" << endl;
@@ -61,7 +64,7 @@ int main() {
 }
 
 
-template<typename T>
+//no se que es esto? template<typename T>
 void Intercambio(T &a, T &b) {
     T temporal = a;
     a = b;
@@ -83,51 +86,40 @@ void mostrarMenu() {
 }
 
 
-void leerDatosAlumnos(vector<string>& alumnos, vector<double>& notas) {
-string nombre;
-double nota;  
+void leerDatosAlumnos(vector<alumno>& lista_clase) {
+Alumno new_alumno;
 cout << "\n--- INGRESAR ALUMNO ---" << endl;
-    cout << "Ingrese nombre: ";
-    getline(cin, nombre); // guarda en nombre
-
-
-
-
-
-
-
-
-
-
-cout << "Ingrese nota: ";
-    if (!(cin >> nota) || nota < 0) { 
+    cout << "Ingrese nombre:";
+    getline(cin, new_alumno.nomb); // guarda en nombre incluyendo espacios. 
+    cout<<"Ingrese la nota:";
+ if (!(cin >> new_alumno.nota) || new_alumno.nota < 0) { 
         cout << "Error: Nota no valida. Regresando al menu." << endl;
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
-        return;
-    }
+        return;}    
+lista_clase.push_back(new_alumno);}
+
 
 // 2) Listar los alumnos
-void listarAlumnosYNotas(const vector<string>& alumnos, const vector<double>& notas) {
-    if (alumnos.empty()) {
+void listarAlumnosYNotas(const vector<Alumno>& lista_clase){
+    if (lista_clase.empty()) {
         cout << "\n-> La lista esta vacia." << endl;
-        return;
-    }
+        return;}
     
     cout << "\n--- LISTADO DE ALUMNOS Y NOTAS (" << alumnos.size() << ") ---" << endl;
-    for (size_t i = 0; i < alumnos.size(); ++i) {
-        cout << i + 1 << ". " << alumnos[i] << " -> Nota: " << notas[i] << endl;
+    for (size_t i = 0; i < lista_clase.size(); ++i) {
+        cout << i + 1 << ". " <<lista_clase[i].nombre << " -> Nota: " << lista_clase[i].nota << endl;
     }
 }
 
 // 3) Ordenar alfabéticamente
-void ordenarAlfabeticamente(vector<string>& alumnos, vector<double>& notas) {
-    if (alumnos.size() < 2) {
+void ordenarAlfabeticamente(vector<Alumno>& lista_clase) {
+    if (lista_clase.size() < 2) {
         cout << "\n-> Se necesitan al menos dos alumnos para ordenar." << endl;
         return;
     }
 
-    size_t n = alumnos.size();
+    size_t n = lista_clase.size();
     bool intercambiado;
 
     // Ordenamiento por Burbuja (Bubble Sort) basado en el nombre del alumno
@@ -136,12 +128,16 @@ void ordenarAlfabeticamente(vector<string>& alumnos, vector<double>& notas) {
         for (size_t j = 0; j < n - i - 1; ++j) {
             
             // Comparación Alfabética
-            if (alumnos[j] > alumnos[j + 1]) { // Orden Ascendente (A -> Z)
+            if (lista_clase[j].nombre > lista_clase[j + 1].nombre) { // Orden Ascendente (A -> Z)
                 
-                // Intercambio PARALELO: Si se cambia el nombre, se cambia la nota.
-                Intercambio(alumnos[j], alumnos[j + 1]);
+                // Intercambio
+                Intercambio(lista[j], alumnos[j + 1]);
                 Intercambio(notas[j], notas[j + 1]);
                 intercambiado = true;
+
+
+
+
             }
         }
         if (intercambiado == false) break; // Optimización si ya está ordenado
